@@ -12,8 +12,13 @@ import java.util.function.Function;
 @Transactional
 public class PostingDAO {
 
-    private DAOContext daoContext = DAOContext.getDaoContext();
-    private static PostingDAO postingDAO = null;
+
+    private DAOContext daoContext;
+
+    public void setDaoContext(DAOContext daoContext) {
+        this.daoContext = daoContext;
+    }
+
     private final String url = DAOConfig.URL;
     private final String userName = DAOConfig.USERNAME;
     private final String password = DAOConfig.PASSWORD;
@@ -31,11 +36,6 @@ public class PostingDAO {
         return p;
     };
 
-    public static PostingDAO getPostingDAO(){
-        if(postingDAO == null)
-            postingDAO = new PostingDAO();
-        return postingDAO;
-    }
 
     public void save(Posting posting, User user){
         posting.setUser_idx(user.getIdx());
