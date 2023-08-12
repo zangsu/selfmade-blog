@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -23,23 +25,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @ExtendWith(SpringExtension.class)
-//@SpringBootTest
-//@SpringJUnitConfig(classes = SelfmadeBlogApplication.class)
+@SpringBootTest
+@SpringJUnitConfig(classes = SelfmadeBlogApplication.class)
 class PostingDAOTest {
 
-    UserDAO userDAO = new UserDAO();
-    //@Autowired
-    PostingDAO postingDAO = new PostingDAO();
+    @Autowired
+    UserDAO userDAO;
+
+    @Autowired
+    PostingDAO postingDAO;
 
     User user = new User("new user", "user password");
     Posting posting = new Posting("title1", user.getIdx(), "content1");
 
-    @BeforeEach
-    public void setting(){
-        DAOContext daoContext = new DAOContext();
-        userDAO.setDaoContext(daoContext);
-        postingDAO.setDaoContext(daoContext);
-    }
     @Test
     public void save() throws Exception{
         //given

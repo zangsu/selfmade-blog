@@ -1,4 +1,3 @@
-/*
 package com.example.selfmadeBlog.DAO;
 
 import com.example.selfmadeBlog.SelfmadeBlogApplication;
@@ -43,4 +42,4 @@ class userDAOTest {
         Assertions.assertThat(user.getId()).isEqualTo(userByIdx.getId());
         Assertions.assertThat(user.getPassword()).isEqualTo(userByIdx.getPassword());
     }
-}*/
+}

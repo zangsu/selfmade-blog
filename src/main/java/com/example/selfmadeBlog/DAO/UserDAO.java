@@ -1,6 +1,7 @@
 package com.example.selfmadeBlog.DAO;
 
 import com.example.selfmadeBlog.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -9,6 +10,7 @@ import java.util.function.Function;
 @Repository
 public class UserDAO {
 
+    @Autowired
     private DAOContext daoContext;
 
     public void setDaoContext(DAOContext daoContext) {
