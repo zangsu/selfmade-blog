@@ -4,6 +4,7 @@ import com.example.selfmadeBlog.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.function.Function;
 
 @Repository
 public class UserDAO {
@@ -13,6 +14,19 @@ public class UserDAO {
     private final String userName = DAOConfig.USERNAME;
     private final String password = DAOConfig.PASSWORD;
 
+    Function<ResultSet, User> userMapper = rs ->{
+        User user = null;
+        try {
+            user = new User();
+            user.setId(rs.getString("id"));
+            user.setPassword(rs.getString("password"));
+            user.setIdx(rs.getInt("idx"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    };
 
     //== 싱글톤 ==//
     private static UserDAO userDAO = null;
@@ -28,6 +42,12 @@ public class UserDAO {
         String sql = "insert into users (id, password) VALUES (?, ?)";
         int generatedKey = daoContext.executeSQLAndReturn(sql, user.getId(), user.getPassword());
         user.setIdx(generatedKey);
+    }
+
+    public User findUserByIdx(int idx){
+        String sql = "select * from users where idx = ?";
+        User user = daoContext.getObject(sql, userMapper, idx);
+        return user;
     }
 
 }
