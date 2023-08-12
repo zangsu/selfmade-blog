@@ -1,8 +1,11 @@
 package com.example.selfmadeBlog.DAO;
 
+import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.function.Function;
 
+@Repository
 public class DAOContext implements DAOInterface{
 
     private static final String url = DAOConfig.URL;

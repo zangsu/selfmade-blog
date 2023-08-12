@@ -2,6 +2,7 @@ package com.example.selfmadeBlog.DAO;
 
 import com.example.selfmadeBlog.model.Posting;
 import com.example.selfmadeBlog.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,10 +10,9 @@ import java.sql.*;
 import java.util.function.Function;
 
 @Repository
-@Transactional
 public class PostingDAO {
 
-
+    @Autowired
     private DAOContext daoContext;
 
     public void setDaoContext(DAOContext daoContext) {
