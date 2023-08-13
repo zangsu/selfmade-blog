@@ -42,12 +42,25 @@ public class PostingDAO {
         String sql = "insert into posting (title, user_idx, content) VALUES (?,?,?)";
         int generatedKey = daoContext.executeSQLAndReturn(sql, posting.getTitle(), Integer.toString(user.getIdx()), posting.getContent());
 
-        System.out.println(generatedKey);
         posting.setIdx(generatedKey);
     }
 
     public Posting findByIdx(int idx){
         Posting posting = daoContext.getObject("select * from posting where idx = ?", postingMapper, idx);
         return posting;
+    }
+
+    public void update(Posting posting){
+        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+
+            PreparedStatement ps = conn.prepareStatement("update posting set title = ?, content = ? where idx = ?");
+            ps.setString(1, posting.getTitle());
+            ps.setString(2, posting.getContent());
+            ps.setString(3, Integer.toString(posting.getIdx()));
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

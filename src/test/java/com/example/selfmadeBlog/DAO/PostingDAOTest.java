@@ -59,10 +59,33 @@ class PostingDAOTest {
         Posting findPosting = postingDAO.findByIdx(posting.getIdx());
 
         //then
-        Assertions.assertThat(findPosting.getTitle()).isEqualTo(posting.getTitle());
-        Assertions.assertThat(findPosting.getContent()).isEqualTo(posting.getContent());
-        System.out.println("posting = " + posting.getUser_idx());
-        System.out.println("findPosting = " + findPosting.getUser_idx());
-        Assertions.assertThat(findPosting.getUser_idx()).isEqualTo(posting.getUser_idx());
+        isSamePosting(posting, findPosting);
+    }
+
+    @Test
+    public void update() throws Exception{
+        //given
+        userDAO.save(user);
+        postingDAO.save(posting, user);
+
+        //when
+        Posting newPosting = new Posting();
+        newPosting.setIdx(posting.getIdx());
+        newPosting.setUser_idx(posting.getUser_idx());
+        newPosting.setTitle("new Title");
+        newPosting.setContent("new Content");
+
+        postingDAO.update(newPosting);
+
+        //then
+        Posting newPostingByIdx = postingDAO.findByIdx(posting.getIdx());
+        isSamePosting(newPostingByIdx, newPosting);
+    }
+
+    public void isSamePosting(Posting a, Posting b) throws Exception {
+        Assertions.assertThat(a.getIdx()).isEqualTo(b.getIdx());
+        Assertions.assertThat(a.getTitle()).isEqualTo(b.getTitle());
+        Assertions.assertThat(a.getContent()).isEqualTo(b.getContent());
+        Assertions.assertThat(a.getUser_idx()).isEqualTo(b.getUser_idx());
     }
 }
