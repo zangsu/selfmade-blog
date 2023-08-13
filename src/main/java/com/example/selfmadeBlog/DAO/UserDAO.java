@@ -49,4 +49,13 @@ public class UserDAO {
         return user;
     }
 
+    public void update(User user) throws SQLException {
+        String sql = "update users set id = ?, password = ? where idx = ?";
+        daoContext.update(sql, user.getId(), user.getPassword(), Integer.toString(user.getIdx()));
+    }
+
+    public void delete(int idx) throws SQLException {
+        String sql = "delete from users where idx = ?";
+        daoContext.delete(sql, Integer.toString(idx));
+    }
 }
