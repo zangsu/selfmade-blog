@@ -38,7 +38,7 @@ public class PostingDAO {
     };
 
 
-    public void save(Posting posting, User user){
+    public void save(Posting posting, User user) throws SQLException {
         posting.setUser_idx(user.getIdx());
         String sql = "insert into posting (title, user_idx, content) VALUES (?,?,?)";
         int generatedKey = daoContext.executeSQLAndReturn(sql, posting.getTitle(), Integer.toString(user.getIdx()), posting.getContent());
@@ -51,20 +51,13 @@ public class PostingDAO {
         return posting;
     }
 
-    public void update(Posting posting){
+    public void update(Posting posting) throws SQLException {
         String sql = "update posting set title = ?, content = ? where idx = ?";
         daoContext.update(sql, posting.getTitle(), posting.getContent(), Integer.toString(posting.getIdx()));
     }
 
-    public void delete(int idx) {
-        try(Connection conn = DriverManager.getConnection(url, userName, password)) {
-            PreparedStatement ps = conn.prepareStatement("delete from posting where idx = ?");
-            ps.setString(1, Integer.toString(idx));
-
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void delete(int idx) throws SQLException {
+        String sql = "delete from posting where idx = ?";
+        daoContext.delete(sql, Integer.toString(idx));
     }
 }

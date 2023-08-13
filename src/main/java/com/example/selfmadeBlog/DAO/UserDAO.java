@@ -37,7 +37,7 @@ public class UserDAO {
     };
 
 
-    public void save(User user){
+    public void save(User user) throws SQLException {
         String sql = "insert into users (id, password) VALUES (?, ?)";
         int generatedKey = daoContext.executeSQLAndReturn(sql, user.getId(), user.getPassword());
         user.setIdx(generatedKey);

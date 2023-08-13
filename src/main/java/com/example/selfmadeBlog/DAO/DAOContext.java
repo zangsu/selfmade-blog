@@ -16,7 +16,7 @@ public class DAOContext implements DAOInterface{
 
 
     @Override
-    public int executeSQLAndReturn(String sql, String... args) {
+    public int executeSQLAndReturn(String sql, String... args) throws SQLException {
         int generatedKey = 0;
         try (Connection conn = getConnect()) {
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -29,8 +29,6 @@ public class DAOContext implements DAOInterface{
             if (rs.next()) {
                 generatedKey =  rs.getInt(1);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return generatedKey;
@@ -55,7 +53,7 @@ public class DAOContext implements DAOInterface{
     }
 
     @Override
-    public void update(String sql, String... args) {
+    public void update(String sql, String... args) throws SQLException {
         try (Connection conn = getConnect()) {
 
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -64,11 +62,18 @@ public class DAOContext implements DAOInterface{
             }
 
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
+    @Override
+    public void delete(String sql, String identifier) throws SQLException {
+        try(Connection conn = getConnect()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, identifier);
+
+            ps.executeUpdate();
+        }
+    }
 
 
     public Connection getConnect() throws SQLException {
