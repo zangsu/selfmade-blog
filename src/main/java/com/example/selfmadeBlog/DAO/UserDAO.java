@@ -1,6 +1,7 @@
 package com.example.selfmadeBlog.DAO;
 
 import com.example.selfmadeBlog.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -9,7 +10,13 @@ import java.util.function.Function;
 @Repository
 public class UserDAO {
 
-    private DAOContext daoContext = DAOContext.getDaoContext();
+    @Autowired
+    private DAOContext daoContext;
+
+    public void setDaoContext(DAOContext daoContext) {
+        this.daoContext = daoContext;
+    }
+
     private final String url = DAOConfig.URL;
     private final String userName = DAOConfig.USERNAME;
     private final String password = DAOConfig.PASSWORD;
@@ -28,15 +35,6 @@ public class UserDAO {
         return user;
     };
 
-    //== 싱글톤 ==//
-    private static UserDAO userDAO = null;
-    private UserDAO(){}
-    public static UserDAO getUserDAO() {
-        if(userDAO == null)
-            userDAO = new UserDAO();
-        return userDAO;
-    }
-    //== 싱글톤 ==//
 
     public void save(User user){
         String sql = "insert into users (id, password) VALUES (?, ?)";

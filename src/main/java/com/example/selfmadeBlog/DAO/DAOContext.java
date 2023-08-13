@@ -1,22 +1,18 @@
 package com.example.selfmadeBlog.DAO;
 
+import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.function.Function;
 
+@Repository
 public class DAOContext implements DAOInterface{
 
-    private static DAOContext daoContext = null;
     private static final String url = DAOConfig.URL;
     private static final String userName = DAOConfig.USERNAME;
     private static final String password = DAOConfig.PASSWORD;
 
-    private DAOContext() {}
 
-    public static DAOContext getDaoContext() {
-        if(daoContext == null)
-            daoContext = new DAOContext();
-        return daoContext;
-    }
 
     @Override
     public int executeSQLAndReturn(String sql, String... args) {
