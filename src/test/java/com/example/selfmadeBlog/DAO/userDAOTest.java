@@ -4,6 +4,7 @@ import com.example.selfmadeBlog.SelfmadeBlogApplication;
 import com.example.selfmadeBlog.exception.database.NoDataFoundedException;
 import com.example.selfmadeBlog.model.User;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -71,6 +72,11 @@ class userDAOTest {
                 .isInstanceOf(NoDataFoundedException.class);
     }
 
+    @AfterEach
+    public void cleanUp() throws SQLException {
+        userDAO.delete(user.getIdx());
+
+    }
     private void isSameUser(User user1, User user2) {
         Assertions.assertThat(user1.getIdx()).isEqualTo(user2.getIdx());
         Assertions.assertThat(user1.getId()).isEqualTo(user2.getId());
