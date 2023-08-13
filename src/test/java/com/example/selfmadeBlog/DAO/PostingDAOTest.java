@@ -7,6 +7,7 @@ import com.example.selfmadeBlog.model.User;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +24,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.SQLException;
 
 
 @ExtendWith(SpringExtension.class)
@@ -96,6 +99,13 @@ class PostingDAOTest {
         Assertions.assertThatThrownBy(() -> postingDAO.findByIdx(posting.getIdx()))
                 .isInstanceOf(NoDataFoundedException.class);
     }
+
+    @AfterEach
+    public void cleanUp() throws SQLException {
+        postingDAO.delete(posting.getIdx());
+        userDAO.delete(user.getIdx());
+    }
+
     public void isSamePosting(Posting a, Posting b) throws Exception {
         Assertions.assertThat(a.getIdx()).isEqualTo(b.getIdx());
         Assertions.assertThat(a.getTitle()).isEqualTo(b.getTitle());
