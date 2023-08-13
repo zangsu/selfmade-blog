@@ -1,5 +1,6 @@
 package com.example.selfmadeBlog.DAO;
 
+import com.example.selfmadeBlog.exception.database.NoDataFoundedException;
 import com.example.selfmadeBlog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -42,7 +43,7 @@ public class UserDAO {
         user.setIdx(generatedKey);
     }
 
-    public User findUserByIdx(int idx){
+    public User findUserByIdx(int idx) throws SQLException {
         String sql = "select * from users where idx = ?";
         User user = daoContext.getObject(sql, userMapper, idx);
         return user;

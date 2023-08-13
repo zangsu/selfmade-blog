@@ -1,5 +1,6 @@
 package com.example.selfmadeBlog.DAO;
 
+import com.example.selfmadeBlog.exception.database.NoDataFoundedException;
 import com.example.selfmadeBlog.model.Posting;
 import com.example.selfmadeBlog.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,20 +46,23 @@ public class PostingDAO {
         posting.setIdx(generatedKey);
     }
 
-    public Posting findByIdx(int idx){
+    public Posting findByIdx(int idx) throws SQLException {
         Posting posting = daoContext.getObject("select * from posting where idx = ?", postingMapper, idx);
         return posting;
     }
 
     public void update(Posting posting){
-        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+        String sql = "update posting set title = ?, content = ? where idx = ?";
+        daoContext.update(sql, posting.getTitle(), posting.getContent(), Integer.toString(posting.getIdx()));
+    }
 
-            PreparedStatement ps = conn.prepareStatement("update posting set title = ?, content = ? where idx = ?");
-            ps.setString(1, posting.getTitle());
-            ps.setString(2, posting.getContent());
-            ps.setString(3, Integer.toString(posting.getIdx()));
+    public void delete(int idx) {
+        try(Connection conn = DriverManager.getConnection(url, userName, password)) {
+            PreparedStatement ps = conn.prepareStatement("delete from posting where idx = ?");
+            ps.setString(1, Integer.toString(idx));
 
             ps.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

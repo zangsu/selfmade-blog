@@ -1,5 +1,6 @@
 package com.example.selfmadeBlog.DAO;
 
+import com.example.selfmadeBlog.exception.database.NoDataFoundedException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -36,7 +37,7 @@ public class DAOContext implements DAOInterface{
     }
 
     @Override
-    public <R, I> R getObject(String sql, Function<ResultSet, R> mapper, I identifier) {
+    public <R, I> R getObject(String sql, Function<ResultSet, R> mapper, I identifier) throws SQLException {
 
         R returnObject = null;
         try (Connection conn = getConnect()) {
@@ -46,13 +47,29 @@ public class DAOContext implements DAOInterface{
 
             if (rs.next()) {
                 returnObject = mapper.apply(rs);
+            }else{
+                throw new NoDataFoundedException();
             }
+        }
+        return returnObject;
+    }
+
+    @Override
+    public void update(String sql, String... args) {
+        try (Connection conn = getConnect()) {
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                ps.setString(i+1, args[i]);
+            }
+
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return returnObject;
     }
+
+
 
     public Connection getConnect() throws SQLException {
         return DriverManager.getConnection(url, userName, password);
