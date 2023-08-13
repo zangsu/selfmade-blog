@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.function.Function;
 
 public interface DAOInterface {
-    public int executeSQLAndReturn(String sql, String... args);
-    public <R, I> R getObject(String sql, Function<ResultSet, R> mapper, I identifier);
+    int executeSQLAndReturn(String sql, String... args) throws SQLException;
+    <R, I> R getObject(String sql, Function<ResultSet, R> mapper, I identifier) throws SQLException;
+    void update(String sql, String... args) throws SQLException;
+    void delete(String sql, String identifier) throws SQLException;
 }
