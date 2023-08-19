@@ -4,7 +4,7 @@
 <jsp:include page="fragments/header.jsp"/>
 <body>
 <div class="container">
-    <jsp:include page="fragments/bodyHeader.jsp">
+    <jsp:include page="fragments/bodyHeader.jsp"/>
 
 
     <div class="jumbotron">
