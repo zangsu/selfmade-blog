@@ -9,10 +9,8 @@
 %>
 
 <div class="container">
-    <form action="localhost:8080/post" method="post">
-        <p>제목 : <%=title%><br></p>
-        <p>내용 : <%=content%></p>
-    </form>
+    <p>제목 : <%=title%><br></p>
+    <p>내용 : <%=content%></p>
 </div>
 </body>
 </html>
