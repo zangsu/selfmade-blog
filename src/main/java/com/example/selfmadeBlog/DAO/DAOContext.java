@@ -1,8 +1,10 @@
 package com.example.selfmadeBlog.DAO;
 
 import com.example.selfmadeBlog.exception.database.NoDataFoundedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.function.Function;
 
@@ -13,7 +15,12 @@ public class DAOContext implements DAOInterface{
     private static final String userName = DAOConfig.USERNAME;
     private static final String password = DAOConfig.PASSWORD;
 
+    DataSource dataSource;
 
+    @Autowired
+    public DAOContext(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public int executeSQLAndReturn(String sql, String... args) throws SQLException {
@@ -77,6 +84,7 @@ public class DAOContext implements DAOInterface{
 
 
     public Connection getConnect() throws SQLException {
-        return DriverManager.getConnection(url, userName, password);
+        //return DriverManager.getConnection(url, userName, password);
+        return this.dataSource.getConnection();
     }
 }
