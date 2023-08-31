@@ -29,16 +29,13 @@ class userDAOTest {
     User user = new User("userId", "userPassword");
 
     @Test
-<<<<<<< Updated upstream
-    public void saveTest() throws SQLException, ClassNotFoundException {
-=======
     @Transactional
     public void saveTest() throws SQLException {
->>>>>>> Stashed changes
         userDAO.save(user);
     }
 
     @Test
+    @Transactional
     public void findUserByIdx() throws Exception{
         //given
         userDAO.save(user);
@@ -52,6 +49,7 @@ class userDAOTest {
 
 
     @Test
+    @Transactional
     public void update() throws Exception{
         //given
         userDAO.save(user);
@@ -67,6 +65,7 @@ class userDAOTest {
     }
 
     @Test
+    @Transactional
     public void delete() throws Exception{
         //given
         userDAO.save(user);
@@ -80,6 +79,7 @@ class userDAOTest {
     }
 
     @AfterEach
+    @Transactional
     public void cleanUp() throws SQLException {
         userDAO.delete(user.getIdx());
 

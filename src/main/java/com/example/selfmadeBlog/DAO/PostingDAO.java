@@ -37,7 +37,6 @@ public class PostingDAO {
         return p;
     };
 
-
     public void save(Posting posting, User user) throws SQLException {
         posting.setUser_idx(user.getIdx());
         String sql = "insert into posting (title, user_idx, content) VALUES (?,?,?)";
@@ -47,7 +46,7 @@ public class PostingDAO {
     }
 
     public Posting findByIdx(int idx) throws SQLException {
-        Posting posting = daoContext.getObject("select * from posting where idx = ?", postingMapper, idx);
+        Posting posting = daoContext.getObject("select * from posting where idx = ", postingMapper, idx);
         return posting;
     }
 

@@ -45,6 +45,7 @@ class PostingDAOTest {
     Posting posting = new Posting("title1", user.getIdx(), "content1");
 
     @Test
+    @Transactional
     public void save() throws Exception{
         //given
         userDAO.save(user);
@@ -56,6 +57,7 @@ class PostingDAOTest {
     }
 
     @Test
+    @Transactional
     public void findByIdx() throws Exception{
         //given
         userDAO.save(user);
@@ -69,6 +71,7 @@ class PostingDAOTest {
     }
 
     @Test
+    @Transactional
     public void update() throws Exception{
         //given
         userDAO.save(user);
@@ -92,6 +95,7 @@ class PostingDAOTest {
     }
 
     @Test
+    @Transactional
     public void delete() throws Exception{
         //given
         userDAO.save(user);
@@ -106,6 +110,7 @@ class PostingDAOTest {
     }
 
     @AfterEach
+    @Transactional
     public void cleanUp() throws SQLException {
         postingDAO.delete(posting.getIdx());
         userDAO.delete(user.getIdx());
