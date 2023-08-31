@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -31,6 +32,7 @@ import java.sql.SQLException;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @SpringJUnitConfig(classes = SelfmadeBlogApplication.class)
+//@ActiveProfiles("test")
 class PostingDAOTest {
 
     @Autowired
@@ -81,6 +83,9 @@ class PostingDAOTest {
         newPosting.setUser_idx(posting.getUser_idx());
         newPosting.setTitle("new Title");
         newPosting.setContent("new Content");
+
+        System.out.println(posting);
+        System.out.println(newPosting);
 
         postingDAO.update(newPosting);
 

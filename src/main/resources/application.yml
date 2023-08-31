@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: local
+    include: test
+
+## ViewResolver가 view 파일들을 찾기 위해 탐색할 경로
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
+
+
+  datasource:
+    driver-class-name : com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/selfmadeblog
+    username: root
+    password: 111111

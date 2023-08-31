@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @SpringJUnitConfig(classes = SelfmadeBlogApplication.class)
+@ActiveProfiles("testDB")
 class userDAOTest {
 
     @Autowired
@@ -28,7 +30,7 @@ class userDAOTest {
 
     @Test
     @Transactional
-    public void saveTest() throws SQLException, ClassNotFoundException {
+    public void saveTest() throws SQLException {
         userDAO.save(user);
     }
 
