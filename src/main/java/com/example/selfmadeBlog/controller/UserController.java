@@ -42,10 +42,19 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(HttpSession session) {
+    public String login(HttpSession session, ServletRequest request) {
 
         System.out.println("success login");
-        session.setAttribute("userIdx", 1);
-        return viewPath + "successLogin";
+        String id = request.getParameter("id");
+        String pw = request.getParameter("password");
+        try {
+            String loginSession = userService.getLoginSession(id, pw);
+            session.setAttribute("userIdx", loginSession);
+            session.setMaxInactiveInterval(30 * 60);
+            return viewPath + "successLogin";
+        } catch (SQLException e) {
+            return viewPath + "failedLogin";
+        }
+
     }
 }
