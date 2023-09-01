@@ -19,7 +19,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    private final String viewPath ="view/user/";
+    private final String viewPath = "view/user/";
 
     @GetMapping("/join")
     public String joinView() {
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginView(){
+    public String loginView() {
         return viewPath + "login";
     }
 
@@ -55,6 +55,12 @@ public class UserController {
         } catch (SQLException e) {
             return viewPath + "failedLogin";
         }
-
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return viewPath + "login";
+    }
+
 }
