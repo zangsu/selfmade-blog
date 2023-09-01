@@ -60,6 +60,24 @@ public class DAOContext implements DAOInterface{
     }
 
     @Override
+    public <R> R getObjectByParameters(String sql, Function<ResultSet, R> mapper, String... params) throws SQLException {
+        R returnObject = null;
+        try (Connection conn = getConnect()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            for(int i = 0; i<params.length; i++)
+                ps.setString(i+1, params[i]);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                returnObject = mapper.apply(rs);
+            }else{
+                throw new NoDataFoundedException();
+            }
+        }
+        return returnObject;
+    }
+
+    @Override
     public void update(String sql, String... args) throws SQLException {
         try (Connection conn = getConnect()) {
 

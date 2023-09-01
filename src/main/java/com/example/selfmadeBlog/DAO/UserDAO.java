@@ -49,6 +49,12 @@ public class UserDAO {
         return user;
     }
 
+    public User findUserByIdAndPW(String id, String pw) throws SQLException {
+        String sql = "select * from users where id = ? and password = ?";
+        User user = daoContext.getObjectByParameters(sql, userMapper, id, pw);
+        return user;
+    }
+
     public void update(User user) throws SQLException {
         String sql = "update users set id = ?, password = ? where idx = ?";
         daoContext.update(sql, user.getId(), user.getPassword(), Integer.toString(user.getIdx()));
