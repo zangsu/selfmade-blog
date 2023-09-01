@@ -3,6 +3,7 @@ package com.example.selfmadeBlog.controller;
 import com.example.selfmadeBlog.dto.UserReceivingDTO;
 import com.example.selfmadeBlog.service.UserService;
 import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,18 @@ public class UserController {
         userService.join(new UserReceivingDTO(id, password));
 
         return viewPath + "successJoin";
+    }
+
+    @GetMapping("/login")
+    public String loginView(){
+        return viewPath + "login";
+    }
+
+    @PostMapping("/login")
+    public String login(HttpSession session) {
+
+        System.out.println("success login");
+        session.setAttribute("userIdx", 1);
+        return viewPath + "successLogin";
     }
 }
