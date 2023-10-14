@@ -1,0 +1,59 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+*{
+    font-family: 'Nanum Gothic';
+}
+h1{
+    font-family: 'Hanna';
+}
+#header {
+    border-bottom: 1px solid #eee;
+}
+#header .inner {
+     position: relative;
+     max-width: 1080px;
+     margin: 0 auto;
+ }
+#header h1 {
+
+     padding: 23px 0;
+     font-family: 'Nanum Myeongjo';
+     font-weight: 800;
+     font-size: 1.75em;
+     line-height: 32px;
+     letter-spacing: -0.2px;
+     color: #333;
+ }
+#header h1 a {
+    display: inline-block;
+    height: 32px;
+    text-decoration: none;
+    color: #333;
+    vertical-align: top;
+}
+#header-navbar {
+    height: 66px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -ms-overflow-style: none;
+}
+#header-navbar ul {
+     display: inline-block;
+     margin-left: -30px;
+     vertical-align: top;
+ }
+#header-navbar  ul li {
+    float: left;
+    padding: 0 26px;
+}
+#header-navbar ul li a {
+    position: relative;
+    display:  inline-block;
+    text-decoration: none;
+    padding: 22px 4px 24px;
+    color: #777;
+}
+
+.nav-menu{
+    display: inline;
+}
