@@ -4,6 +4,7 @@ import com.example.selfmadeBlog.dto.UserReceivingDTO;
 import com.example.selfmadeBlog.service.UserService;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,9 @@ import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
     UserService userService;
 
     private final String viewPath = "view/user/";
@@ -25,6 +26,7 @@ public class UserController {
     public String joinView() {
         return viewPath + "join";
     }
+
 
     @PostMapping()
     public String join(ServletRequest request) throws SQLException {
